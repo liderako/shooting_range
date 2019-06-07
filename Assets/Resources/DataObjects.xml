@@ -1,0 +1,7 @@
+﻿<?xml version="1.0"?>
+<root>
+    <object reward="5000">CubeRed</object>
+    <object reward="345">CubeBlack</object>
+    <object reward="666">SphereRed</object>
+    <object reward="999">SphereBlack</object>
+</root>
