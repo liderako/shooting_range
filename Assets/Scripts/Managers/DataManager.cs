@@ -8,6 +8,7 @@ namespace Managers
     {
         public List<FigurePool> Pools;
         [SerializeField]private int _maxSizePool;
+        public int Score;
 
         public static DataManager manager;
 

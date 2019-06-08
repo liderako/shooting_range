@@ -9,7 +9,8 @@ namespace Managers
     {
         public static GameManager Gm;
         [SerializeField]private Vector3 _spawnPosition;
-        private void Awake()
+        
+        public void Awake()
         {
             if (Gm == null)
             {
@@ -22,6 +23,7 @@ namespace Managers
             Figure figure = fp.Get();
             figure.gameObject.SetActive(true);
             figure.gameObject.transform.position = _spawnPosition;
+            figure.Dead += fp.ReturnObject;
             Debug.Log("Spawn:" + fp.gameObject.name);
         }
     }

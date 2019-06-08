@@ -56,11 +56,12 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Figure\Figure.cs" />
     <Compile Include="Assets\Scripts\Figure\FigurePool.cs" />
-    <Compile Include="Assets\Scripts\Interface\IFigure.cs" />
+    <Compile Include="Assets\Scripts\Figure\Interface\IFigure.cs" />
     <Compile Include="Assets\Scripts\Managers\DataManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Scripts\Managers\LoaderManager.cs" />
     <Compile Include="Assets\Scripts\ObjectPool.cs" />
+    <Compile Include="Assets\Scripts\Player\Controller.cs" />
     <Compile Include="Assets\Scripts\UI\ButtonSpawn.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
