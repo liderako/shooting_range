@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Enviroment;
+using TMPro;
 
 namespace Managers
 {
@@ -9,6 +10,7 @@ namespace Managers
     {
         public static GameManager Gm;
         [SerializeField]private Vector3 _spawnPosition;
+        [SerializeField] private TextMeshProUGUI _textScore;
         
         public void Awake()
         {
@@ -25,6 +27,19 @@ namespace Managers
             figure.gameObject.transform.position = _spawnPosition;
             figure.Dead += fp.ReturnObject;
             Debug.Log("Spawn:" + fp.gameObject.name);
+        }
+
+        private void Update()
+        {
+            _textScore.text = DataManager.DM.Score.ToString();
+        }
+
+        public void AddScore(int score)
+        {
+            Debug.Log(score);
+            DataManager.DM.Score += score;
+            LoaderManager.Lm.Save();
+            _textScore.text = DataManager.DM.Score.ToString();
         }
     }
 }

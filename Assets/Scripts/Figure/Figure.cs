@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Managers;
 using UnityEngine;
@@ -8,24 +9,37 @@ namespace Enviroment
 {
     public abstract class Figure : MonoBehaviour, IFigure
     {
-        private int _score;
-
+        [SerializeField, HideInInspector]private  int _score;
+        private  bool _isHit;
+        [SerializeField] public AudioSource _sound;
+        
         public delegate void MethodContainer(Figure f);
         public event MethodContainer Dead;
-        
+
         public void GetHit()
         {
-            DataManager.manager.Score += _score;
-            if (Dead != null)
+            if (!_isHit)
             {
-                Dead(this);
+                _isHit = true;
+                _sound.Play();
+                Debug.Log(_score);
+                GameManager.Gm.AddScore(_score);
+                PlayAnimationDead();
             }
         }
 
         public int Score
         {
-            get => _score;
-            set => _score = value;
+            set { _score = value; }
+        }
+
+        public void DestroyFigure()
+        {
+            if (Dead != null)
+            {
+                Dead(this);
+            }
+            _isHit = false;
         }
 
         public abstract void PlayAnimationDead();

@@ -8,21 +8,26 @@ namespace Managers
     {
         public List<FigurePool> Pools;
         [SerializeField]private int _maxSizePool;
-        public int Score;
-
-        public static DataManager manager;
+        [SerializeField]private int _score;
+        public static DataManager DM;
 
         void Awake()
         {
-            if (manager == null)
+            if (DM == null)
             {
-                manager = this;
+                DM = this;
             }
         }
 
         void Start()
         {
             Pools = new List<FigurePool>();
+        }
+
+        public int Score
+        {
+            get => _score;
+            set => _score = value;
         }
 
         public int MaxSizePool

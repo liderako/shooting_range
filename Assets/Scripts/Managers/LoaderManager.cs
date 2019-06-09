@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using GameUI;
 using TMPro;
 using UnityEngine.UI;
+using System.IO;
 using Enviroment;
 
 namespace Managers
@@ -14,19 +15,46 @@ namespace Managers
     {
         [SerializeField] private string _nameFileDataObject;
         [SerializeField] private GameObject _scrollViewContent;
+        private string _pathData;
         
         private const string RootElementXML = "root";
         private const string ChildElementXML = "object";
         private const string PrefabPoolName = "FigurePool";
         private const string PrefabItemUI = "Item";
+
+        public static LoaderManager Lm;
+
+        void Awake()
+        {
+            if (Lm == null)
+            {
+                Lm = this;
+            }
+        }
         
         // Start is called before the first frame update
         void Start()
         {
-            Load();
+            _pathData = Application.persistentDataPath + "/data.xml";
+            LoadMain();
+        }
+        
+        public void Save()
+        {
+            XElement root = new XElement(RootElementXML);
+            
+            root.AddFirst(new XElement("score", DataManager.DM.Score));
+            XDocument saveDoc = new XDocument(root);
+            File.WriteAllText(_pathData, saveDoc.ToString());
+        }
+        
+        private void LoadMain()
+        {
+            LoadData();
+            LoadObject();
         }
 
-        private void Load()
+        private void LoadObject()
         {
             TextAsset txt = Resources.Load<TextAsset>(_nameFileDataObject);
             if (txt == null)
@@ -40,19 +68,33 @@ namespace Managers
             }
         }
 
+        private void LoadData()
+        {
+            if (File.Exists(_pathData))
+            {
+                XElement root = XDocument.Parse(File.ReadAllText(_pathData)).Element(RootElementXML);
+                XElement element = root.Element("score");
+                DataManager.DM.Score = Int32.Parse(element.Value);
+            }
+            else
+            {
+                Save();
+            }
+        }
+
         private void GenerateObject(XElement root)
         {
             foreach (XElement element in root.Elements(ChildElementXML))
             {
                 GameObject go = (GameObject) Instantiate(Resources.Load(PrefabPoolName));
                 FigurePool fp = go.GetComponent<FigurePool>();
-                fp.m_prefab = Resources.Load<Figure>("Figure/" + element.Value);
+                fp.m_prefab = (Resources.Load<Figure>("Figure/" + element.Value));
                 fp.m_prefab.Score = Int32.Parse(element.Attribute("reward").Value);
-                fp.m_size = DataManager.manager.MaxSizePool;
+                fp.m_size = DataManager.DM.MaxSizePool;
                 fp.gameObject.name = fp.gameObject.name + element.Value;
                 fp.AwakePool();
                 GenerateUI(element, fp);
-                DataManager.manager.Pools.Add(fp);
+                DataManager.DM.Pools.Add(fp);
             }
         }
 

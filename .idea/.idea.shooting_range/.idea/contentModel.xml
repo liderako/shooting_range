@@ -11,11 +11,13 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="Figure" t="Include">
+            <e p="Cube.cs" t="Include" />
             <e p="Figure.cs" t="Include" />
             <e p="FigurePool.cs" t="Include" />
             <e p="Interface" t="Include">
               <e p="IFigure.cs" t="Include" />
             </e>
+            <e p="Sphere.cs" t="Include" />
           </e>
           <e p="Managers" t="Include">
             <e p="DataManager.cs" t="Include" />
